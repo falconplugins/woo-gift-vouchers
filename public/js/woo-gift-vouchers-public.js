@@ -29,4 +29,12 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+	// $( document ).ready( function() {
+	// 	$( "body.woocommerce-cart table.cart" ).ready( function() {
+	// 		var colspan = $("table > thead > tr:first > th").length;
+			
+	// 		$( "#wgv_strip td" ).attr( "colspan", colspan );
+	// 	} );
+	// } );
+
 })( jQuery );

@@ -67,6 +67,12 @@ class Woo_Gift_Vouchers {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
+
+		if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+			add_action( 'admin_notices', array( $this, 'wgv_woo_deactive_notice' ) );
+			return;
+		}
+
 		if ( defined( 'WOO_GIFT_VOUCHERS_VERSION' ) ) {
 			$this->version = WOO_GIFT_VOUCHERS_VERSION;
 		} else {
@@ -117,10 +123,23 @@ class Woo_Gift_Vouchers {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-woo-gift-vouchers-admin.php';
 
 		/**
+		 * The class responsible for defining all actions that occur in the admin area.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/woo-gift-vouchers-admin-settings.php';
+		$wgv_admin_settings = new Woo_Gift_Vouchers_Admin_Settings();
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-woo-gift-vouchers-public.php';
+
+		/**
+		 * The class responsible for defining all actions that occur in the public-facing
+		 * side of the site.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/woo-gift-vouchers-public-display.php';
+		$wgv_public_display = new Woo_Gift_Vouchers_Public_Display();
 
 		$this->loader = new Woo_Gift_Vouchers_Loader();
 
@@ -182,6 +201,19 @@ class Woo_Gift_Vouchers {
 	 */
 	public function run() {
 		$this->loader->run();
+	}
+	
+	/**
+	 * Show admin notice if WooCommerce is not active.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wgv_woo_deactive_notice() {
+
+		echo '<div class="notice notice-warning is-dismissible">
+			<p>' . __( "Plugin <strong>WooCommerce Gift Vouchers</strong> works with <strong>WooCommerce</strong>. Please activate it first. ", "woo-gift-vouchers" ) . '</p>
+		</div>';
+
 	}
 
 	/**

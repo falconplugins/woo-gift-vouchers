@@ -17,7 +17,7 @@
  * Plugin URI:        https://falconplugins.store/plugins/woo-gift-vouchers
  * Description:       Improve your sales by offering Gift Vouchers to your customers.
  * Version:           1.0.0
- * Author:            Falcon Plugins
+ * Author:            Falcon Plugins <plugins@falconplugins.store>
  * Author URI:        https://falconplugins.store/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -32,10 +32,23 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
  */
 define( 'WOO_GIFT_VOUCHERS_VERSION', '1.0.0' );
+
+
+if( ! defined( 'WGV_SUCCESS_STRIP_MSG' ) ){
+	define( 
+		'WGV_SUCCESS_STRIP_MSG', 
+		__( '🎉 Woohoo! You are eligible to get [wgv_number_of_vouchers] gift voucher(s) worth [wgv_gift_amount].', 'woo-gift-vouchers' ) 
+	);
+}
+
+if( ! defined( 'WGV_INSUFFICIENT_AMOUNT_STRIP_MSG' ) ){
+	define( 
+		'WGV_INSUFFICIENT_AMOUNT_STRIP_MSG', 
+		__( '⭐ Good going! Just add item(s) of [wgv_rem_amount] or more to claim gift voucher(s) worth [wgv_gift_amount].', 'woo-gift-vouchers' )
+	);
+}
 
 /**
  * The code that runs during plugin activation.
