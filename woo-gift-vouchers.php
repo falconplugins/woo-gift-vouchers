@@ -35,7 +35,6 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'WOO_GIFT_VOUCHERS_VERSION', '1.0.0' );
 
-
 if( ! defined( 'WGV_SUCCESS_STRIP_MSG' ) ){
 	define( 
 		'WGV_SUCCESS_STRIP_MSG', 
@@ -47,6 +46,20 @@ if( ! defined( 'WGV_INSUFFICIENT_AMOUNT_STRIP_MSG' ) ){
 	define( 
 		'WGV_INSUFFICIENT_AMOUNT_STRIP_MSG', 
 		__( '⭐ Good going! Just add item(s) of [wgv_rem_amount] or more to claim gift voucher(s) worth [wgv_gift_amount].', 'woo-gift-vouchers' )
+	);
+}
+
+if( ! defined( 'WGV_VOUCHER_EMAIL_SUBJECT' ) ){
+	define( 
+		'WGV_VOUCHER_EMAIL_SUBJECT', 
+		__( 'REWARD ALERT! You have got gift voucher against your order {order_id}', 'woo-gift-vouchers' )
+	);
+}
+
+if( ! defined( 'WGV_EMAIL_TEMPLATE' ) ){
+	define( 
+		'WGV_EMAIL_TEMPLATE', 
+		plugin_dir_path( __FILE__ ) . 'templates/email/woo-gift-voucher-email.php'
 	);
 }
 

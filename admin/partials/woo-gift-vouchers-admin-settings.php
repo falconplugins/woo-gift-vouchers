@@ -101,6 +101,7 @@ class Woo_Gift_Vouchers_Admin_Settings {
         $sections = array(
             ''  => __( 'General Settings', 'woo-gift-vouchers' ),
             'wgv-design-settings'   => 'Design Settings',
+            'wgv-email-settings'   => 'Email Settings',
         );
 
         echo '<ul class="subsubsub">';
@@ -195,6 +196,13 @@ class Woo_Gift_Vouchers_Admin_Settings {
                 'placeholder' => __( 'Minimum Order Value', 'woo-gift-vouchers' ),
                 'desc' => __( 'Set the minimum order value for applying gift voucher.', 'woo-gift-vouchers' ),
                 'id'   => 'wc_' . $this->tab_id . '_minimum_order'
+            ),
+            'wgv_coupon_code_prefix' => array(
+                'name' => __( 'Coupon Code Prefix', 'woo-gift-vouchers' ),
+                'type' => 'text',
+                'placeholder' => __( 'Coupon Code Prefix', 'woo-gift-vouchers' ),
+                'default'   => "WCGV_",
+                'id'   => 'wgv_coupon_code_prefix'
             ),
             'multiply_vouchers' => array(
                 'name' => __( 'Multiple Vouchers' ),
@@ -297,12 +305,64 @@ class Woo_Gift_Vouchers_Admin_Settings {
             )
 		);
 
+        $email_settings = array(
+			'section_title' => array(
+                'name'     => __( 'WooCommerce Gift Voucher Settings :: Emails', 'woo-gift-vouchers' ),
+                'type'     => 'title',
+                'desc'     => __( 'Email preferences will be fetched from <a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=email#email_template_options-description' ) ) . '">here</a>', 'woo-gift-vouchers' ),
+                'id'       => 'wc_' . $this->tab_id . '__design_section_title',
+            ),
+            'wc_wgv_from_email' => array(
+                'name' => __( '"From" Email' ),
+                'type' => 'email',
+                'placeholder' => 'Override "From" Email',
+                'desc' => __( 'Input "From" email if you want to override default "From" email.', 'woo-gift-vouchers' ),
+                'desc_tip' => true,
+                'id'    => 'wc_wgv_from_email',
+            ),
+            'wc_wgv_from_name' => array(
+                'name' => __( '"From" Name' ),
+                'type' => 'text',
+                'placeholder' => 'Override "From" Name',
+                'desc' => __( 'Input "From" name if you want to override default "From" name.', 'woo-gift-vouchers' ),
+                'desc_tip' => true,
+                'id'    => 'wc_wgv_from_name',
+            ),
+            'wc_wgv_email_status' => array(
+                'name' => __( 'Order Status' ),
+                'type' => 'select',
+                'id'    => 'wc_wgv_email_status',
+                'desc' => __( 'Select at what order status you want to send gift voucher(s) in an email.' ),
+                'desc_tip' => true,
+                "default" => "wc-completed",
+                'options' => wc_get_order_statuses()
+            ),
+            'wc_wgv_email_subject' => array(
+                'name' => __( 'Email Subject', 'woo-gift-vouchers' ),
+                'type' => 'textarea',
+                'desc' => __( "You may user {order_id} and {order_first_name} in subject.", "woo-gift-vouchers" ),
+                'desc_tip' => true,
+                'placeholder' => __( 'Email Subject', 'woo-gift-vouchers' ),
+                'default' => WGV_VOUCHER_EMAIL_SUBJECT,
+                'id'   => 'wc_wgv_email_subject',
+                'css'      => 'min-width: 50%; height: 75px;',
+            ),
+            'section_end' => array(
+                'type' => 'sectionend',
+                'id' => 'wc_email_section_end'
+            )
+		);
+
         if( ! isset( $_GET['section'] ) || '' === $_GET['section'] ){
 		    return apply_filters( 'wc_woo-gift-vouchers_settings', $general_settings );
         }
 
-        if( isset( $_GET['section'] ) || 'wgv-design-settings' === $_GET['section'] ){
+        if( isset( $_GET['section'] ) && 'wgv-design-settings' === $_GET['section'] ){
             return apply_filters( 'wc_woo-gift-vouchers_settings', $design_settings );
+        }
+
+        if( isset( $_GET['section'] ) && 'wgv-email-settings' === $_GET['section'] ){
+            return apply_filters( 'wc_woo-gift-vouchers_settings', $email_settings );
         }
     }
 

@@ -129,6 +129,12 @@ class Woo_Gift_Vouchers {
 		$wgv_admin_settings = new Woo_Gift_Vouchers_Admin_Settings();
 
 		/**
+		 * The class responsible for defining email actions that occur in the admin area.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/woo-gift-vouchers-admin-actions.php';
+		$wgv_admin_actions = new Woo_Gift_Vouchers_Admin_Actions();
+
+		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
